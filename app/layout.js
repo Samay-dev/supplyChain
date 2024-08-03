@@ -1,4 +1,7 @@
+// The layout file is the main entry point of the application, any changes added to the body of this page will show up on all routes in the website
+
 import "@styles/globals.css";
+import Nav from "./components/Nav";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <main className='app'>
-          {/* nav bar here */}
+          <Nav />
           {children}
           {/* footer here */}
         </main>
