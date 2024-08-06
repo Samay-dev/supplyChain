@@ -2,6 +2,7 @@
 
 import "@styles/globals.css";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,11 +12,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true} className="h-screen bg-gradient-to-b from-green-200 to-green-500">
         <main className='app'>
           <Nav />
           {children}
-          {/* footer here */}
+          <Footer />
         </main>
       </body>
     </html>
