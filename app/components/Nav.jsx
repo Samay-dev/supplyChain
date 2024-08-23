@@ -1,7 +1,11 @@
-import Link from 'next/link'
-import React from 'react'
+"use client";
+
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { signIn, signOut, useSession, getProviders } from 'next-auth';
 
 const Nav = () => {
+    const [ hello, setHello ] = useState('');
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
