@@ -1,15 +1,27 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth';
+import logo from '../../public/logo.jpg';
 
 const Nav = () => {
     const [ hello, setHello ] = useState('');
+
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
-                <Link href='/' className="btn btn-ghost text-xl">Supply Chain</Link>
+                <Link href='/' className="btn btn-ghost text-xl">
+                    <Image
+                        src={logo}
+                        alt="supplyChain Logo"
+                        width={50}
+                        height={50}
+                        className='object-contain'
+                    />
+                    <p className='max-sm:hidden'>supplyChain</p>
+                </Link>
             </div>
             <div className="flex-none">
                 <button className="btn btn-square btn-ghost">
