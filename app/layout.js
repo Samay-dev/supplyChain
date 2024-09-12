@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className="h-screen bg-gradient-to-b from-green-200 to-green-500">
+      <body suppressHydrationWarning={true} className="w-full bg-gradient-to-b from-green-200 to-green-500">
         <main className='app'>
           <Nav />
           {children}

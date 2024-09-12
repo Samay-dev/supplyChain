@@ -6,8 +6,17 @@ export default function Home() {
         <h2 className='text-base text-center'>A place where all your supply needs are met.</h2>
       </div>
       <div className="grid grid-cols-1 justify-items-center py-4">
-        <div className='flex size-80  border-white rounded bg-gradient-to-r from-white'>
+        <div className='flex size-80  border-white rounded bg-gradient-to-r from-white mb-4'>
           <div>Card 1</div>
+        </div>
+        <div className='flex size-80  border-white rounded bg-gradient-to-r from-white mb-4'>
+          <div>Card 2</div>
+        </div>
+        <div className='flex size-80  border-white rounded bg-gradient-to-r from-white mb-4'>
+          <div>Card 3</div>
+        </div>
+        <div className='flex size-80  border-white rounded bg-gradient-to-r from-white mb-4'>
+          <div>Card 4</div>
         </div>
       </div>
     </section>

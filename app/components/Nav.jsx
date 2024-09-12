@@ -7,12 +7,25 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth';
 import logo from '../../public/logo.jpg';
 
 const Nav = () => {
-    const [ hello, setHello ] = useState('');
+    const isUserLoggedIn = true;
+
+    const [providers, setProviders] = useState(null);
+    const [toggleDropDown, setToggleDropDown] = useState(false);
+
+    useEffect(() => {
+        const setProviders = async () => {
+            const response = await getProviders();
+
+            setProviders(response);
+        }
+
+        setProviders();
+    }, [])
 
     return (
         <div className="navbar bg-base-100">
-            <div className="flex-1">
-                <Link href='/' className="btn btn-ghost text-xl">
+            <div className="flex-1 justify-between">
+                <Link href='/' className="btn btn-ghost">
                     <Image
                         src={logo}
                         alt="supplyChain Logo"
@@ -20,23 +33,87 @@ const Nav = () => {
                         height={50}
                         className='object-contain'
                     />
-                    <p className='max-sm:hidden'>supplyChain</p>
+                    <p className='max-sm:hidden text-xl'>
+                        supplyChain
+                    </p>
                 </Link>
-            </div>
-            <div className="flex-none">
-                <button className="btn btn-square btn-ghost">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="inline-block h-5 w-5 stroke-current">
-                    <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                </svg>
-                </button>
+
+                {/* Desktop Navigation */}
+                <div className='sm:flex hidden'>
+                    {isUserLoggedIn ? (
+                        <div className='flex gap-3 md:gap-5'>
+                            <Link href='/create-prompt' className='rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center'>
+                                Create Post
+                            </Link>
+
+                            <button type='button' onClick={signOut} className='rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center'>
+                                Sign Out
+                            </button>
+
+                            <Link href='/profile'>
+                                <Image
+                                    src={logo}
+                                    width={37}
+                                    height={37}
+                                    alt='profile'
+                                />
+                            </Link>
+                        </div>
+                    ): (
+                        <>
+                            {providers && 
+                                Object.values(providers).map((provider) => (
+                                    <button
+                                        type='button'
+                                        key={provider.name}
+                                        onClick={() => signIn(provider.id)}
+                                    >
+                                        Sign In
+                                    </button>
+                                ))}
+                        </>
+                    )}
+                </div>
+                {/* Mobile Navigation */}
+                <div className='sm:hidden flex relative'>
+                    {isUserLoggedIn ? (
+                        <div className='flex'>
+                            <Image
+                                src={logo}
+                                alt="supplyChain Logo"
+                                width={50}
+                                height={50}
+                                className='object-contain'
+                                onClick={() => setToggleDropDown((prev) => !prev)}
+                            />
+
+                            {toggleDropDown && (
+                                <div className='dropdown'>
+                                    <Link
+                                        href='/profile'
+                                        className='text-sm font-inter text-gray-700 hover:text-gray-500 font-medium'
+                                        onClick={() => setToggleDropDown(false)}
+                                    >
+                                        My Profile
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    ): (
+                        <>
+                            {providers && 
+                                Object.values(providers).map((provider) => (
+                                    <button
+                                        type='button'
+                                        key={provider.name}
+                                        onClick={() => signIn(provider.id)}
+                                    >
+                                        Sign In
+                                    </button>
+                                ))}
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     )
