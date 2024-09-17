@@ -88,7 +88,7 @@ const Nav = () => {
                             />
 
                             {toggleDropDown && (
-                                <div className='dropdown'>
+                                <div className='absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end'>
                                     <Link
                                         href='/profile'
                                         className='text-sm font-inter text-gray-700 hover:text-gray-500 font-medium'
@@ -96,6 +96,16 @@ const Nav = () => {
                                     >
                                         My Profile
                                     </Link>
+                                    <button
+                                        type='button'
+                                        onClick={() => {
+                                            setToggleDropDown(false);
+                                            signOut();
+                                        }}
+                                        className='mt-5 w-full rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center'
+                                    >
+                                        Sign Out
+                                    </button>
                                 </div>
                             )}
                         </div>
