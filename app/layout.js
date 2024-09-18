@@ -2,6 +2,7 @@
 
 import "@styles/globals.css";
 import Nav from "./components/Nav";
+import Provider from './components/Provider';
 import Footer from "./components/Footer";
 
 export const metadata = {
@@ -13,11 +14,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className="w-full bg-gradient-to-b from-green-200 to-green-500">
-        <main className='app'>
-          <Nav />
-          {children}
-          <Footer />
-        </main>
+        <Provider>
+          <main className='app'>
+            <Nav />
+            {children}
+            <Footer />
+          </main>
+        </Provider>
       </body>
     </html>
   );
