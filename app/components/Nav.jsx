@@ -7,19 +7,19 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 import logo from '../../public/logo.jpg';
 
 const Nav = () => {
-    const isUserLoggedIn = true;
+    const { data: session } = useSession();
 
     const [providers, setProviders] = useState(null);
     const [toggleDropDown, setToggleDropDown] = useState(false);
 
     useEffect(() => {
-        const setProviders = async () => {
+        const setUpProviders = async () => {
             const response = await getProviders();
 
             setProviders(response);
         }
 
-        setProviders();
+        setUpProviders();
     }, [])
 
     return (
@@ -40,7 +40,7 @@ const Nav = () => {
 
                 {/* Desktop Navigation */}
                 <div className='sm:flex hidden'>
-                    {isUserLoggedIn ? (
+                    {session?.user ? (
                         <div className='flex gap-3 md:gap-5'>
                             <Link href='/create-prompt' className='rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center'>
                                 Create Post
@@ -52,9 +52,10 @@ const Nav = () => {
 
                             <Link href='/profile'>
                                 <Image
-                                    src={logo}
-                                    width={37}
-                                    height={37}
+                                    src={session?.user.image}
+                                    width={45}
+                                    height={45}
+                                    style={{borderRadius: '50%'}}
                                     alt='profile'
                                 />
                             </Link>
@@ -76,10 +77,10 @@ const Nav = () => {
                 </div>
                 {/* Mobile Navigation */}
                 <div className='sm:hidden flex relative'>
-                    {isUserLoggedIn ? (
+                    {session?.user ? (
                         <div className='flex'>
                             <Image
-                                src={logo}
+                                src={session?.user.image}
                                 alt="supplyChain Logo"
                                 width={50}
                                 height={50}
