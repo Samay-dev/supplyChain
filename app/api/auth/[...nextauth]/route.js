@@ -5,6 +5,8 @@ import User from '@models/user';
 
 import { connectToDB } from '@utils/database';
 
+//console.log({clientId: process.env.GOOGLE_ID,clientSecret: process.env.GOOGLE_CLIENT_SECRET,mongoDBUri: process.env.MONGODB_URI})
+
 const handler = NextAuth({
     providers: [
         GoogleProvider({
@@ -12,8 +14,9 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         })
     ],
-    callback: {
+    callbacks: {
         async session({ session }) {
+            console.log('INSIDE SESSION')
             const sessionUser = await User.findOne({
                 email: session.user.email
             })
@@ -23,14 +26,15 @@ const handler = NextAuth({
             return session;
         },
         async signIn({ profile }) {
+            console.log('inside signIn');
             try {
-                console.log('inside signIn')
                 await connectToDB();
     
                 // check if a user already exists
                 const userExists = await User.findOne({
                     email: profile.email
                 });
+
                 // if not, create a new user
                 if(!userExists) {
                     await User.create({
