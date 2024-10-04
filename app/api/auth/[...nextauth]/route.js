@@ -16,7 +16,6 @@ const handler = NextAuth({
     ],
     callbacks: {
         async session({ session }) {
-            console.log('INSIDE SESSION')
             const sessionUser = await User.findOne({
                 email: session.user.email
             })
@@ -26,7 +25,6 @@ const handler = NextAuth({
             return session;
         },
         async signIn({ profile }) {
-            console.log('inside signIn');
             try {
                 await connectToDB();
     
